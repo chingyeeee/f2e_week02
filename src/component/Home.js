@@ -9,6 +9,7 @@ import { FaFacebookF, FaGoogle } from "react-icons/fa";
 import { HiOutlineMail, HiOutlineLockClosed } from "react-icons/hi";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { devices } from "../utilities/devices.js";
+import { useState } from "react";
 
 const HomeBg = styled.section`
   background-color: ${colors.p2};
@@ -20,7 +21,7 @@ const HomeBg = styled.section`
 `;
 
 const Action = styled.div`
-  margin-top: 50px;
+  margin-top: 32px;
   background-color: ${colors.n1};
   border-radius: 8px;
   box-shadow: 0 0 15px ${colors.shadowlv1};
@@ -41,8 +42,12 @@ const Head = styled.div`
 
 const TabLogin = styled(P1)`
   padding: 16px 12px 20px;
-  border-bottom: 3px solid ${colors.p1};
+  border-bottom: 3px solid
+    ${(props) => (props.active ? colors.p1 : "transparent")};
   margin: 0;
+  font-weight: ${(props) => (props.active ? 500 : 400)};
+  color: ${(props) => (props.active ? colors.p1 : colors.n6)};
+  cursor: pointer;
 `;
 
 const Body = styled.div`
@@ -113,6 +118,9 @@ const LoginInput = styled.div`
   }
   .iconButton {
     cursor: pointer;
+    &:hover {
+      color: ${colors.n6} !important;
+    }
   }
   input {
     flex-grow: 1;
@@ -152,7 +160,43 @@ const BtnRegister = styled(P2)`
   }
 `;
 
-const LoginBody = () => {
+const ErrorMsg = styled(P2)`
+  color: ${colors.error};
+  text-align: center;
+  padding-top: 8px;
+  margin: 0;
+`;
+
+//Login Block
+const LoginBody = (props) => {
+  const { login, setLogin, email, setEmail } = props;
+  const [showPassword, setShowPassword] = useState(false);
+  // const [password,setPassword] = useState(null)
+  const [inputValue, setInputValue] = useState(null);
+  const [message, setMessage] = useState(null);
+  const [btnState, setBtnState] = useState(false);
+
+  //BUG
+  function emailValidation() {
+    let regEmail =
+      /^\w+((-\w+)|(\.\w+))*@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
+
+    if (inputValue != null && regEmail.test(inputValue)) {
+      setEmail(inputValue);
+      setMessage("");
+      setBtnState(true);
+    } else {
+      setMessage("Email格式錯誤，請重新輸入！");
+    }
+
+    inputValue == null && setMessage("請輸入Email！");
+  }
+
+  function loginHandler() {
+    emailValidation();
+    message === "" && setLogin(!login);
+  }
+
   return (
     <>
       <Row className="justify-content-center">
@@ -172,8 +216,16 @@ const LoginBody = () => {
         <Col xs={12}>
           <LoginInput>
             <HiOutlineMail size="1.5rem" color={colors.p1} className="icon" />
-            <input type="text" placeholder="請輸入您的電子信箱" />
+            <input
+              type="email"
+              placeholder="請輸入您的電子信箱"
+              onChange={(e) => {
+                setInputValue(e.target.value);
+                inputValue != null && setBtnState(true);
+              }}
+            />
           </LoginInput>
+          <ErrorMsg>{message}</ErrorMsg>
         </Col>
         <Col xs={12}>
           <LoginInput>
@@ -182,16 +234,39 @@ const LoginBody = () => {
               color={colors.p1}
               className="icon"
             />
-            <input type="text" placeholder="請輸入您的密碼" />
-            <AiOutlineEyeInvisible
-              size="1.5rem"
-              color={colors.n5}
-              className="icon iconButton"
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="請輸入您的密碼"
+              onKeyDown={(e) => {
+                (e.key === "Enter" || e.key === "Tab") && emailValidation();
+              }}
             />
+
+            {showPassword ? (
+              <AiOutlineEye
+                size="1.5rem"
+                color={colors.n5}
+                className="icon iconButton"
+                onClick={() => setShowPassword(!showPassword)}
+              />
+            ) : (
+              <AiOutlineEyeInvisible
+                size="1.5rem"
+                color={colors.n5}
+                className="icon iconButton"
+                onClick={() => setShowPassword(!showPassword)}
+              />
+            )}
           </LoginInput>
         </Col>
       </Row>
-      <LoginButton>登入</LoginButton>
+      <LoginButton
+        onClick={loginHandler}
+        onKeyDown={(e) => e.key === "Enter" && loginHandler}
+        active={btnState}
+      >
+        登入
+      </LoginButton>
       <RegisterTips>
         <P2>還沒有帳號？</P2>
         <BtnRegister medium>註冊</BtnRegister>
@@ -200,35 +275,56 @@ const LoginBody = () => {
   );
 };
 
-export const Home = () => {
-  return (
-    <HomeBg>
-      <Container>
-        <Row className="flex-column">
-          <Col xs={12} md={5} lg={3} className="mx-auto mt-5">
-            <Image src={Logo} alt="logo" />
-          </Col>
-          <Col xs={12} md={10} lg={5} className="mx-auto">
-            <Action>
-              <Row className="flex-column">
-                <Col xs={12} md={12} className="mx-auto">
-                  <Head>
-                    <TabLogin medium>登入</TabLogin>
-                    <TabLogin>註冊</TabLogin>
-                  </Head>
-                  <Body>
-                    <LoginBody />
-                  </Body>
-                </Col>
-              </Row>
-            </Action>
-          </Col>
-        </Row>
-      </Container>
+//Login後的會員首頁
+const MemberBg = styled.div`
+  background-color: ${colors.n2};
+`;
 
-      <DecoPerson className="d-none d-md-block">
-        <Image src={DecoHomePerson} />
-      </DecoPerson>
-    </HomeBg>
+export const Home = () => {
+  const [login, setLogin] = useState(false);
+  const [email, setEmail] = useState(null);
+
+  return (
+    <>
+      {login ? (
+        <MemberBg />
+      ) : (
+        <HomeBg>
+          <Container>
+            <Row className="flex-column">
+              <Col xs={8} sm={7} md={5} lg={3} className="mx-auto mt-5">
+                <Image src={Logo} alt="logo" />
+              </Col>
+              <Col xs={12} md={10} lg={7} xl={5} className="mx-auto">
+                <Action>
+                  <Row className="flex-column">
+                    <Col xs={12} md={12} className="mx-auto">
+                      <Head>
+                        <TabLogin medium active>
+                          登入
+                        </TabLogin>
+                        <TabLogin>註冊</TabLogin>
+                      </Head>
+                      <Body>
+                        <LoginBody
+                          login={login}
+                          setLogin={setLogin}
+                          email={email}
+                          setEmail={setEmail}
+                        />
+                      </Body>
+                    </Col>
+                  </Row>
+                </Action>
+              </Col>
+            </Row>
+          </Container>
+
+          <DecoPerson className="d-none d-md-block">
+            <Image src={DecoHomePerson} />
+          </DecoPerson>
+        </HomeBg>
+      )}
+    </>
   );
 };
