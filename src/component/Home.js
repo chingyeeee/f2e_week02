@@ -10,6 +10,8 @@ import { HiOutlineMail, HiOutlineLockClosed } from "react-icons/hi";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { devices } from "../utilities/devices.js";
 import { useState } from "react";
+import { NavBar } from "./common/NavBar.js";
+import { TabNav } from "./common/TabNav.js";
 
 const HomeBg = styled.section`
   background-color: ${colors.p2};
@@ -127,6 +129,8 @@ const LoginInput = styled.div`
     outline: 0;
     border: 0;
     color: ${colors.n7};
+    max-width: 100%;
+    font-size: 12px;
   }
   ::placeholder {
     color: ${colors.n5};
@@ -169,7 +173,7 @@ const ErrorMsg = styled(P2)`
 
 //Login Block
 const LoginBody = (props) => {
-  const { login, setLogin, email, setEmail } = props;
+  const { login, setLogin, setEmail } = props;
   const [showPassword, setShowPassword] = useState(false);
   // const [password,setPassword] = useState(null)
   const [inputValue, setInputValue] = useState(null);
@@ -278,6 +282,9 @@ const LoginBody = (props) => {
 //Login後的會員首頁
 const MemberBg = styled.div`
   background-color: ${colors.n2};
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const Home = () => {
@@ -287,7 +294,10 @@ export const Home = () => {
   return (
     <>
       {login ? (
-        <MemberBg />
+        <MemberBg>
+          <NavBar email={email} login={login} setLogin={setLogin} />
+          <TabNav />
+        </MemberBg>
       ) : (
         <HomeBg>
           <Container>
