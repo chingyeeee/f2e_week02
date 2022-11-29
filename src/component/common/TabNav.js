@@ -1,14 +1,15 @@
-import { Container } from "react-bootstrap";
 import styled from "styled-components";
 import { colors } from "../../utilities/colors";
 import { devices, devicesMax } from "../../utilities/devices";
-import { BtnStyle, Image } from "../../utilities/layout";
+import { BtnStyle, Image, LightBg } from "../../utilities/layout";
 import { P1, P2, Title } from "../../utilities/typography";
 import { RiAddFill } from "react-icons/ri";
-import { PendingSelf } from "./tabBlcoks/PendingSelf";
 import IconSignInvitation from "../../img/icons/icon-sign-invitation.svg";
 import IconSignPersonal from "../../img/icons/icon-sign-personally.svg";
 import { useState } from "react";
+import { FilterBlock } from "./tabBlcoks/FilterBlock";
+import { Container } from "react-bootstrap";
+import { DocsBlock } from "./tabBlcoks/DocsBlock";
 
 const TabBar = styled.div`
   background-color: ${colors.n1};
@@ -192,7 +193,12 @@ export const TabNav = () => {
           </TabMenu>
         </Container>
       </TabBar>
-      <PendingSelf />
+      <LightBg>
+        <Container className="position-relative">
+          <FilterBlock />
+          <DocsBlock />
+        </Container>
+      </LightBg>
     </>
   );
 };
