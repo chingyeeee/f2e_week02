@@ -11,9 +11,24 @@ const fontSize = {
 };
 
 export const H5 = styled.h3`
+  margin: 0;
   font-size: ${fontSize.h5};
   line-height: ${(props) => (props.mobile ? "30px" : "20px")};
   font-weight: ${(props) => (props.medium ? "500" : "700")};
+  color: ${(props) => {
+    switch (props.$mode) {
+      case "active":
+        return colors.p1;
+      case "light":
+        return colors.n5;
+      case "white":
+        return colors.n1;
+      case "grey":
+        return colors.n6;
+      default:
+        return colors.n7;
+    }
+  }};
 `;
 
 export const Title = styled.h4`
@@ -28,6 +43,8 @@ export const Title = styled.h4`
         return colors.n5;
       case "white":
         return colors.n1;
+      case "black":
+        return colors.n7;
       default:
         return colors.n6;
     }
@@ -42,6 +59,8 @@ export const Title = styled.h4`
           return colors.p3;
         case "white":
           return colors.n1;
+        case "black":
+          return colors.n7;
         default:
           return colors.p3;
       }
@@ -101,4 +120,18 @@ export const Caption = styled.p`
   line-height: ${(props) => (props.mobile ? "18px" : "16px")};
   font-weight: ${(props) => (props.bold ? "700" : "400")};
   margin: 0;
+  color: ${(props) => {
+    switch (props.$mode) {
+      case "active":
+        return colors.p1;
+      case "light":
+        return colors.n5;
+      case "white":
+        return colors.n1;
+      case "black":
+        return colors.n7;
+      default:
+        return colors.n6;
+    }
+  }};
 `;

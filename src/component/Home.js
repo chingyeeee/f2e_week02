@@ -296,7 +296,7 @@ export const Home = () => {
       {login ? (
         <MemberBg>
           <NavBar email={email} login={login} setLogin={setLogin} />
-          <TabNav />
+          <TabNav email={email} />
         </MemberBg>
       ) : (
         <HomeBg>

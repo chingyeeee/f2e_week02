@@ -1,7 +1,7 @@
 import Container from "react-bootstrap/Container";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
 import styled from "styled-components";
-import { Image } from "../../utilities/layout";
+import { Image, UserInfo, UserProfile } from "../../utilities/layout";
 import Logo from "../../img/common/logo.svg";
 import { devices, devicesMax } from "../../utilities/devices";
 import { colors } from "../../utilities/colors";
@@ -172,36 +172,9 @@ const UserNav = styled.div`
   }
 `;
 
-const UserProfile = styled.span`
-  background-color: ${colors.p2};
-  color: ${colors.p1};
-  border-radius: 50%;
-  padding: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  @media ${devicesMax.tabletH} {
-    padding: 10px;
-    svg {
-      width: 1.25rem;
-      height: 1.25rem;
-    }
-  }
-`;
-
-const UserInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-`;
-
 const UserName = styled(Title)`
   color: ${colors.p1};
   margin: 0;
-`;
-
-const UserEmail = styled(Caption)`
-  color: ${colors.n6};
 `;
 
 const UserDetail = styled.div`
@@ -296,12 +269,17 @@ export const NavBar = ({ email, login, setLogin }) => {
                     <Title className="d-lg-none title-help">協助</Title>
                   </UserQuestion>
                   <UserNav onClick={() => setShowUser(!showUser)}>
-                    <UserProfile>
+                    <UserProfile
+                      width="1.25rem"
+                      height="1.25rem"
+                      padding="8px"
+                      paddingMobile="10px"
+                    >
                       <BsPersonFill />
                     </UserProfile>
                     <UserInfo>
                       <UserName bold>{username}</UserName>
-                      <UserEmail className="d-lg-none">{email}</UserEmail>
+                      <Caption className="d-lg-none">{email}</Caption>
                     </UserInfo>
                     <BsFillCaretDownFill
                       color={colors.n6}

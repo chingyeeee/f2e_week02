@@ -8,8 +8,9 @@ import IconSignInvitation from "../../img/icons/icon-sign-invitation.svg";
 import IconSignPersonal from "../../img/icons/icon-sign-personally.svg";
 import { useState } from "react";
 import { FilterBlock } from "./tabBlcoks/FilterBlock";
-import { Container } from "react-bootstrap";
-import { DocsBlock } from "./tabBlcoks/DocsBlock";
+import { Container, Row } from "react-bootstrap";
+import { Docs } from "../common/tabBlcoks/Docs";
+import { EmptyState } from "./tabBlcoks/EmptyState";
 
 const TabBar = styled.div`
   background-color: ${colors.n1};
@@ -54,15 +55,31 @@ const TabLink = styled.a`
   align-items: center;
   gap: 4px;
   text-decoration: none;
-  font-size: 16px;
-  color: ${(props) => (props.active ? colors.p1 : colors.n6)};
-  line-height: 20px;
-  font-weight: ${(props) => (props.active ? "700" : "400")};
   cursor: pointer;
   flex-shrink: 0;
+  display: flex;
+  gap: 4px;
+  h4 {
+    font-weight: ${(props) => (props.active ? "700" : "400")};
+    color: ${(props) => (props.active ? colors.p1 : colors.n6)};
+    line-height: 20px;
+  }
+  p {
+    font-weight: ${(props) => (props.active ? "700" : "400")};
+    color: ${(props) => (props.active ? colors.p1 : colors.n6)};
+    line-height: 20px;
+    background-color: ${(props) => (props.active ? colors.p2 : colors.n3)};
+    padding: 0 6px;
+    border-radius: 50%;
+  }
   &:hover {
     color: ${colors.p3};
   }
+`;
+
+const MainBlockInner = styled(Row)`
+  position: relative;
+  padding: 24px 0;
 `;
 
 const BtnAdd = styled(BtnStyle)`
@@ -138,7 +155,7 @@ const AddSign = styled.div`
     width: 20%;
   }
   &:hover {
-    background-color: ${colors.n2};
+    background-color: ${colors.p2};
   }
 `;
 
@@ -148,7 +165,8 @@ const SignType = styled.div`
   gap: 8px;
 `;
 
-export const TabNav = () => {
+export const TabNav = ({ email }) => {
+  const username = email.split("@")[0];
   const [showAddType, setShowAddType] = useState(false);
 
   return (
@@ -157,12 +175,27 @@ export const TabNav = () => {
         <Container>
           <TabMenu>
             <TabList>
-              <TabLink active>待自己簽署</TabLink>
-              <TabLink>待他人簽署</TabLink>
-              <TabLink>已完成</TabLink>
-              <TabLink>已取消</TabLink>
-              <TabLink>草稿</TabLink>
-              <TabLink>已封存</TabLink>
+              <TabLink active>
+                <Title>待自己簽署</Title>
+              </TabLink>
+              <TabLink>
+                <Title>待他人簽署</Title>
+                <P2>2</P2>
+              </TabLink>
+              <TabLink>
+                <Title>已完成</Title>
+                <P2>2</P2>
+              </TabLink>
+              <TabLink>
+                <Title>已取消</Title>
+              </TabLink>
+              <TabLink>
+                <Title>草稿</Title>
+                <P2>1</P2>
+              </TabLink>
+              <TabLink>
+                <Title>已封存</Title>
+              </TabLink>
             </TabList>
             <BtnAdd main onClick={() => setShowAddType(!showAddType)}>
               <Title $mode="white" className="d-none d-lg-block">
@@ -196,7 +229,10 @@ export const TabNav = () => {
       <LightBg>
         <Container className="position-relative">
           <FilterBlock />
-          <DocsBlock />
+          <MainBlockInner>
+            <Docs username={username} />
+            {/* <EmptyState /> */}
+          </MainBlockInner>
         </Container>
       </LightBg>
     </>
