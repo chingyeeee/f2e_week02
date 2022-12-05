@@ -11,6 +11,7 @@ import { FilterBlock } from "./tabBlcoks/FilterBlock";
 import { Container, Row } from "react-bootstrap";
 import { Docs } from "../common/tabBlcoks/Docs";
 import { EmptyState } from "./tabBlcoks/EmptyState";
+import { useNavigate } from "react-router-dom";
 
 const TabBar = styled.div`
   background-color: ${colors.n1};
@@ -168,6 +169,7 @@ const SignType = styled.div`
 export const TabNav = ({ email }) => {
   const username = email.split("@")[0];
   const [showAddType, setShowAddType] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -204,7 +206,7 @@ export const TabNav = ({ email }) => {
               <RiAddFill color={colors.n1} size="1.5rem" />
             </BtnAdd>
             <BtnAddInner show={showAddType ? true : false}>
-              <AddSign>
+              <AddSign onClick={() => navigate("/sign-by-myself")}>
                 <Image src={IconSignPersonal} />
                 <SignType>
                   <P1 medium $mode="black">

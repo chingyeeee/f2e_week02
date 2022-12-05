@@ -10,8 +10,8 @@ import { HiOutlineMail, HiOutlineLockClosed } from "react-icons/hi";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { devices } from "../utilities/devices.js";
 import { useState } from "react";
-import { NavBar } from "./common/NavBar.js";
-import { TabNav } from "./common/TabNav.js";
+import { Member } from "./Member.js";
+import { useNavigate } from "react-router-dom";
 
 const HomeBg = styled.section`
   background-color: ${colors.p2};
@@ -179,6 +179,7 @@ const LoginBody = (props) => {
   const [inputValue, setInputValue] = useState(null);
   const [message, setMessage] = useState(null);
   const [btnState, setBtnState] = useState(false);
+  const navigate = useNavigate();
 
   //BUG
   function emailValidation() {
@@ -198,7 +199,7 @@ const LoginBody = (props) => {
 
   function loginHandler() {
     emailValidation();
-    message === "" && setLogin(!login);
+    message === "" && setLogin(true) && navigate("/");
   }
 
   return (
@@ -279,14 +280,6 @@ const LoginBody = (props) => {
   );
 };
 
-//Login後的會員首頁
-const MemberBg = styled.div`
-  background-color: ${colors.n2};
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-`;
-
 export const Home = () => {
   const [login, setLogin] = useState(false);
   const [email, setEmail] = useState(null);
@@ -294,10 +287,12 @@ export const Home = () => {
   return (
     <>
       {login ? (
-        <MemberBg>
-          <NavBar email={email} login={login} setLogin={setLogin} />
-          <TabNav email={email} />
-        </MemberBg>
+        <Member
+          login={login}
+          setLogin={setLogin}
+          email={email}
+          setEmail={setEmail}
+        />
       ) : (
         <HomeBg>
           <Container>

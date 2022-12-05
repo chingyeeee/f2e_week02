@@ -248,17 +248,17 @@ export const NavBar = ({ email, login, setLogin }) => {
               <MainNavBg open={openSidebar ? true : false} />
               <MainNavWrapper open={openSidebar ? true : false}>
                 <MainNav>
-                  <NavLink active>
+                  <NavLink to="/" active>
                     <HiOutlineDocumentDuplicate />
                     <Title bold $mode="active">
                       文件
                     </Title>
                   </NavLink>
-                  <NavLink>
+                  <NavLink to="/search">
                     <HiOutlineSearch />
                     <Title>搜尋</Title>
                   </NavLink>
-                  <NavLink>
+                  <NavLink to="/notifications">
                     <IoMdNotificationsOutline />
                     <Title>通知</Title>
                   </NavLink>

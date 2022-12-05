@@ -14,6 +14,7 @@ export const BtnStyle = styled.button`
   border-radius: 4px;
   border: 1px solid ${colors.p1};
   padding: 12px 20px;
+  color: ${colors.p1};
   &:hover {
     background-color: ${(props) => (props.main ? colors.p3 : colors.p2)};
   }

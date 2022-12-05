@@ -73,6 +73,20 @@ export const Subtitle = styled.h5`
   line-height: ${(props) => (props.mobile ? "24px" : "18px")};
   font-weight: ${(props) => (props.bold ? "bold" : "400")};
   margin: 0;
+  color: ${(props) => {
+    switch (props.$mode) {
+      case "active":
+        return colors.p1;
+      case "light":
+        return colors.n5;
+      case "white":
+        return colors.n1;
+      case "black":
+        return colors.n7;
+      default:
+        return colors.n6;
+    }
+  }};
 `;
 
 export const P1 = styled.p`
