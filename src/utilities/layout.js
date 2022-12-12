@@ -13,8 +13,12 @@ export const BtnStyle = styled.button`
   background-color: ${(props) => (props.main ? colors.p1 : colors.n1)};
   border-radius: 4px;
   border: 1px solid ${colors.p1};
-  padding: 12px 20px;
+  padding: 8px 20px;
   color: ${colors.p1};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
   &:hover {
     background-color: ${(props) => (props.main ? colors.p3 : colors.p2)};
   }
@@ -138,4 +142,25 @@ export const DocTag = styled(Caption)`
         return colors.n1;
     }
   }}; ;
+`;
+
+export const NavLinkItem = styled.div`
+  display: flex;
+  gap: ${(props) => props.gap};
+  padding: ${(props) => props.paddingV} ${(props) => props.paddingH};
+  align-items: center;
+  background-color: ${colors.n1};
+  cursor: pointer;
+  svg {
+    color: ${colors.n5};
+  }
+  &:hover {
+    background-color: ${colors.p2};
+    svg {
+      color: ${colors.p1};
+    }
+    h4 {
+      color: ${colors.p1};
+    }
+  }
 `;
