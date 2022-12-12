@@ -3,13 +3,12 @@ import { LightBg } from "../../../utilities/layout";
 import styled from "styled-components";
 import { colors } from "../../../utilities/colors";
 import { P2, Title } from "../../../utilities/typography";
-import { useState } from "react";
 
 const Upload = styled(LightBg)`
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 82px);
+  min-height: 100vh;
 `;
 
 const TabMenu = styled.div`
@@ -69,7 +68,7 @@ const FileBtnBlock = styled.div`
   left: 0;
   right: 0;
   margin: auto;
-  width: 30%;
+  max-width: 50%;
   height: 44px;
   display: flex;
   flex-direction: column;
@@ -98,38 +97,23 @@ const Remind = styled.div`
   padding: 16px 0 40px;
 `;
 
-export const UploadDocs = () => {
-  // Upload檔案進度
-  // const [uploadPercent, setUploadPercent] = useState(0);
-
-  // const UploadProgess = (e) => {
-  //   let percent = ((e.loaded / e.total) * 100).toFixed(2);
-  //   setUploadPercent(percent);
-  // };
-
-  const onFileUpload = async (e) => {
-    const fileList = e.target.files;
-
-    if (fileList?.length > 0) {
-      const pdfArrayBuffer = await readFileAsync(fileList[0]);
-    }
+export const UploadDocs = ({ setPdf, setFileName }) => {
+  const getBase64 = (file) => {
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      setPdf(reader.result);
+    };
   };
 
-  function readFileAsync(file) {
-    return new Promise((resolve, reject) => {
-      let reader = new FileReader();
-      reader.onload = () => {
-        resolve(reader.result);
-      };
-      reader.onerror = reject;
-      reader.readAsArrayBuffer(file);
-    });
-  }
+  const onFileUpload = (event) => {
+    if (event.target.files[0] === undefined) return;
+    const file = event.target.files[0];
 
-  function range(start, end) {
-    let length = end - start + 1;
-    return Array.from({ length }, (_, i) => start + i - 1);
-  }
+    getBase64(file);
+
+    setFileName(file.name);
+  };
 
   return (
     <Upload>
@@ -145,9 +129,9 @@ export const UploadDocs = () => {
               <UploadFile>
                 <LabelFile>
                   <input
-                    id="fileUploader"
                     type="file"
-                    accept="image/png,application/pdf"
+                    id="file-selector"
+                    accept=".pdf"
                     onChange={onFileUpload}
                   />
                   <FileBtnBlock>
