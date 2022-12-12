@@ -16,6 +16,7 @@ export const colors = {
   n5: "#B7BAC0",
   n6: "#78797D",
   n7: "#191A1B",
+  modalBg: "rgba(6, 6, 6, 0.5)",
   tagTeach: "#FAEDCC",
   tagTest: "#DFEAFF",
   shadowlv1: "rgba(25, 26, 27, 0.08)",
