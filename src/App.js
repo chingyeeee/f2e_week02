@@ -3,7 +3,6 @@ import { Home } from "./component/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Member } from "./component/Member";
 import { SignByMyself } from "./component/SignDocs/Own/SignByMyself";
-import { UploadDocs } from "./component/SignDocs/Own/UploadDocs";
 
 function App() {
   return (
@@ -11,9 +10,7 @@ function App() {
       <Routes>
         <Route index path="/login" element={<Home />} />
         <Route path="/" element={<Member />} />
-        <Route path="/sign-by-myself" element={<SignByMyself />}>
-          <Route index element={<UploadDocs />} />
-        </Route>
+        <Route path="/sign-by-myself" element={<SignByMyself />}></Route>
       </Routes>
     </Router>
   );
