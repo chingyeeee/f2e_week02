@@ -6,6 +6,8 @@ import { NavLinkItem } from "../../../utilities/layout";
 import AllPages from "../pdf/AllPages";
 import { SignAction } from "../pdf/SignAction";
 import { useState } from "react";
+import { useAtom } from "jotai";
+import { signAtom } from "../../../utilities/canvas/signAtom";
 
 const DocContent = styled.div`
   height: 100vh;
@@ -36,6 +38,7 @@ const ShowDoc = styled.div`
 
 export const SignDoc = ({ pdf, docName, setDocName, docTags }) => {
   const [btnType, setBtnType] = useState(null);
+  const [_, setSignData] = useAtom(signAtom);
 
   function onHandleClick(btnType) {
     setBtnType(btnType);
@@ -43,7 +46,9 @@ export const SignDoc = ({ pdf, docName, setDocName, docTags }) => {
 
   return (
     <DocContent>
-      {btnType === "sign" && <SignAction setBtnType={setBtnType} />}
+      {btnType === "sign" && (
+        <SignAction setBtnType={setBtnType} setSignData={setSignData} />
+      )}
       <SideNav>
         <NavLinkItem
           gap="12px"
