@@ -55,7 +55,7 @@ const BtnUse = styled(BtnStyle)`
   }
 `;
 
-export const CreateSignCanvas = ({ setAction, sign, setSign }) => {
+export const CreateSignCanvas = ({ setAction, sign, setSign, setSignData }) => {
   const canvasRef = useRef(null);
   const [canvas, setCanvas] = useState(null);
   const [ctx, setCtx] = useState(null);
@@ -136,10 +136,8 @@ export const CreateSignCanvas = ({ setAction, sign, setSign }) => {
   // 轉圖片
   const handleConvertToImage = () => {
     const image = canvas.toDataURL("image/png");
-    // setSignData(image);
-    console.log(setSign(sign.push(image)));
-    console.log(sign);
-    // setSign(sign.push(image));
+    setSignData(image);
+    setSign([...sign, image]);
     if (sign) setAction("sign");
   };
 
