@@ -58,8 +58,17 @@ const SignList = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 32px;
   width: 100%;
+`;
+const Sign = styled(BtnStyle)`
+  max-height: 50px;
+  overflow: hidden;
+  width: 100%;
+  img {
+    width: 100%;
+    max-width: 100px;
+    height: auto;
+  }
 `;
 
 const SignModal = () => {
@@ -76,11 +85,13 @@ const SignModal = () => {
 const SignModalContent = ({ setAction, sign }) => {
   return (
     <SignList>
-      {/* {sign.forEach((sign) => (
-        <BtnStyle className="w-100 mt-3">
-          <Image src={sign} />
-        </BtnStyle>
-      ))} */}
+      {sign.map((s, i) => {
+        return (
+          <Sign className="mt-3" key={i}>
+            <Image src={s} />
+          </Sign>
+        );
+      })}
       <BtnStyle className="w-100 mt-3" onClick={() => setAction("createSign")}>
         <Title $mode="active" bold>
           創建簽名
@@ -99,7 +110,7 @@ const CreateSignModal = () => {
   );
 };
 
-export const SignAction = ({ setBtnType }) => {
+export const SignAction = ({ setBtnType, setSignData }) => {
   const [action, setAction] = useState("sign");
   const [sign, setSign] = useState([]);
 
@@ -118,6 +129,7 @@ export const SignAction = ({ setBtnType }) => {
               setAction={setAction}
               sign={sign}
               setSign={setSign}
+              setSignData={setSignData}
             />
           )}
         </ModalContent>
