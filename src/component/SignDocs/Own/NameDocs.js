@@ -73,7 +73,13 @@ const FileNameInput = styled.div`
   border: 1px solid ${colors.n5};
 `;
 
-export const NameDocs = ({ pdf, fileName, setPdf, setDocName, setDocTags }) => {
+export const NameDocs = ({
+  pdfByPages,
+  fileName,
+  setPdf,
+  setDocName,
+  setDocTags,
+}) => {
   const [inputValue, setInputValue] = useState("");
   const [inputTag, setInputTag] = useState("");
 
@@ -118,7 +124,9 @@ export const NameDocs = ({ pdf, fileName, setPdf, setDocName, setDocTags }) => {
                     上傳文件
                   </Title>
                   <FileNameInput>
-                    <Caption>單頁</Caption>
+                    <Caption>
+                      {pdfByPages.length === 1 ? "單頁" : "多頁"}
+                    </Caption>
                     <P1 $mode="black" medium>
                       {fileName}
                     </P1>
