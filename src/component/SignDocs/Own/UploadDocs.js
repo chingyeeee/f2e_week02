@@ -3,6 +3,7 @@ import { LightBg } from "../../../utilities/layout";
 import styled from "styled-components";
 import { colors } from "../../../utilities/colors";
 import { P2, Title } from "../../../utilities/typography";
+import readPdf from "../../../utilities/readPdf";
 
 const Upload = styled(LightBg)`
   display: flex;
@@ -97,22 +98,17 @@ const Remind = styled.div`
   padding: 16px 0 40px;
 `;
 
-export const UploadDocs = ({ setPdf, setFileName }) => {
-  const getBase64 = (file) => {
-    let reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      setPdf(reader.result);
-    };
-  };
-
+export const UploadDocs = ({ setPdf, setFileName, onUpLoad }) => {
   const onFileUpload = (event) => {
-    if (event.target.files[0] === undefined) return;
+    // get file
     const file = event.target.files[0];
 
-    getBase64(file);
-
+    //儲存檔案名稱
     setFileName(file.name);
+    //儲存檔案
+    setPdf(file);
+    // utilitiy
+    readPdf(file).then(onUpLoad);
   };
 
   return (
@@ -136,7 +132,7 @@ export const UploadDocs = ({ setPdf, setFileName }) => {
                   />
                   <FileBtnBlock>
                     <FileBtn>
-                      <Title $mode="active">選擇檔案 (PDF / png)</Title>
+                      <Title $mode="active">選擇檔案 (PDF)</Title>
                     </FileBtn>
                     <P2>或直接拖放檔案進來</P2>
                   </FileBtnBlock>
