@@ -5,12 +5,13 @@ import { Subtitle, Title } from "../../../utilities/typography";
 import { BtnStyle, Image } from "../../../utilities/layout";
 import { useState } from "react";
 import { CreateSignCanvas } from "./CreateSignCanvas";
+import { fabric } from "fabric";
 
 const AlertBg = styled.div`
   background-color: ${colors.modalBg};
   width: 100vw;
   height: 100vh;
-  display: flex;
+  display: ${(props) => (props.isShow ? "flex" : "none")};
   justify-content: center;
   align-items: center;
   position: fixed;
@@ -82,13 +83,27 @@ const SignModal = () => {
   );
 };
 
-const SignModalContent = ({ setAction, sign }) => {
+const SignModalContent = ({ setAction, sign, setShowSignModal, canvas }) => {
+  function applySign(sign) {
+    fabric.Image.fromURL(sign, (img) => {
+      img.set({
+        // 這邊可以設定上下左右距離、角度、寬高等等
+        left: 250,
+        top: 250,
+      });
+      img.scaleToWidth(50);
+      img.scaleToHeight(50);
+      canvas.add(img).renderAll();
+    });
+    setShowSignModal(false);
+  }
+
   return (
     <SignList>
-      {sign.map((s, i) => {
+      {sign.map((sign, i) => {
         return (
-          <Sign className="mt-3" key={i}>
-            <Image src={s} />
+          <Sign className="mt-3" key={i} onClick={() => applySign(sign)}>
+            <Image src={sign} />
           </Sign>
         );
       })}
@@ -110,26 +125,38 @@ const CreateSignModal = () => {
   );
 };
 
-export const SignAction = ({ setBtnType, setSignData }) => {
+export const SignAction = ({
+  sign,
+  setSign,
+  canvas,
+  setShowSignModal,
+  showSignModal,
+}) => {
   const [action, setAction] = useState("sign");
-  const [sign, setSign] = useState([]);
 
   return (
-    <AlertBg>
+    <AlertBg isShow={showSignModal}>
       <Modal>
-        <IoClose className="icon-close" onClick={() => setBtnType("")} />
+        <IoClose
+          className="icon-close"
+          onClick={() => setShowSignModal(false)}
+        />
         <ModalHeader>
           {action === "sign" ? <SignModal /> : <CreateSignModal />}
         </ModalHeader>
         <ModalContent>
           {action === "sign" ? (
-            <SignModalContent setAction={setAction} sign={sign} />
+            <SignModalContent
+              setAction={setAction}
+              sign={sign}
+              setShowSignModal={setShowSignModal}
+              canvas={canvas}
+            />
           ) : (
             <CreateSignCanvas
               setAction={setAction}
               sign={sign}
               setSign={setSign}
-              setSignData={setSignData}
             />
           )}
         </ModalContent>
