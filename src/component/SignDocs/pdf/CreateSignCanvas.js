@@ -55,7 +55,7 @@ const BtnUse = styled(BtnStyle)`
   }
 `;
 
-export const CreateSignCanvas = ({ setAction, sign, setSign, setSignData }) => {
+export const CreateSignCanvas = ({ setAction, sign, setSign }) => {
   const canvasRef = useRef(null);
   const [canvas, setCanvas] = useState(null);
   const [ctx, setCtx] = useState(null);
@@ -63,7 +63,7 @@ export const CreateSignCanvas = ({ setAction, sign, setSign, setSignData }) => {
   const [drawing, setDrawing] = useState(false);
   const [strokeColor, setStrokeColor] = useState(colors.n7);
 
-  const canvasSize = 300;
+  const canvasSize = 600;
 
   useEffect(() => {
     setCanvas(canvasRef.current);
@@ -135,8 +135,7 @@ export const CreateSignCanvas = ({ setAction, sign, setSign, setSignData }) => {
 
   // 轉圖片
   const handleConvertToImage = () => {
-    const image = canvas.toDataURL("image/png");
-    setSignData(image);
+    const image = canvas.toDataURL();
     setSign([...sign, image]);
     if (sign) setAction("sign");
   };
@@ -146,8 +145,8 @@ export const CreateSignCanvas = ({ setAction, sign, setSign, setSignData }) => {
       <AiOutlineQuestionCircle color={colors.n5} />
       <Canvas
         ref={canvasRef}
-        width={canvasSize + 200}
-        height={canvasSize}
+        width={canvasSize}
+        height={canvasSize - 400}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
