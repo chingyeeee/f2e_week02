@@ -166,7 +166,9 @@ const SignType = styled.div`
   gap: 8px;
 `;
 
-export const TabNav = ({ email }) => {
+export const TabNav = () => {
+  const email = JSON.parse(localStorage.getItem("email"));
+  const historyFile = JSON.parse(localStorage.getItem("signHistory"));
   const username = email.split("@")[0];
   const [showAddType, setShowAddType] = useState(false);
   const navigate = useNavigate();
@@ -232,8 +234,11 @@ export const TabNav = ({ email }) => {
         <Container className="position-relative">
           <FilterBlock />
           <MainBlockInner>
-            <Docs username={username} />
-            {/* <EmptyState /> */}
+            {historyFile ? (
+              <Docs username={username} historyFile={historyFile} />
+            ) : (
+              <EmptyState />
+            )}
           </MainBlockInner>
         </Container>
       </LightBg>

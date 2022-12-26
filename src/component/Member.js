@@ -11,11 +11,11 @@ const MemberBg = styled.div`
   flex-direction: column;
 `;
 
-export const Member = ({ email, login, setLogin }) => {
+export const Member = ({ login, setLogin }) => {
   return (
     <MemberBg>
-      <NavBar email={email} login={login} setLogin={setLogin} />
-      <TabNav email={email} />
+      <NavBar login={login} setLogin={setLogin} />
+      <TabNav />
     </MemberBg>
   );
 };
