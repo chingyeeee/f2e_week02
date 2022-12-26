@@ -8,6 +8,7 @@ import { UploadDocs } from "../Own/UploadDocs";
 import { NameDocs } from "./NameDocs";
 import { SignDoc } from "./SignDocs";
 import { DocHeader } from "./DocHeader";
+import { useNavigate } from "react-router-dom";
 
 const SignNavHeader = styled.header`
   background-color: ${colors.n1};
@@ -64,6 +65,13 @@ export const SignByMyself = () => {
   const [fileName, setFileName] = useState(null);
   const [docName, setDocName] = useState(null);
   const [docTags, setDocTags] = useState(null);
+  const [pdfByPages, setpdfByPages] = useState("");
+  const [showDownloadModal, setShowDownloadModal] = useState(false);
+  const navigate = useNavigate();
+
+  function onUpLoad(blob) {
+    setpdfByPages(blob);
+  }
 
   return (
     <>
@@ -74,17 +82,19 @@ export const SignByMyself = () => {
               <NavStep active>1</NavStep>
               <Subtitle $mode="active">上傳檔案</Subtitle>
             </NavLink>
-            <NavBlock />
+            <NavBlock active />
             <NavLink>
-              <NavStep>2</NavStep>
-              <Subtitle>確認上傳檔案</Subtitle>
+              <NavStep active={pdf !== null && "true"}>2</NavStep>
+              <Subtitle $mode={pdf !== null && "active"}>確認上傳檔案</Subtitle>
             </NavLink>
-            <NavBlock />
+            <NavBlock active={pdf !== null && "true"} />
             <NavLink>
-              <NavStep>3</NavStep>
-              <Subtitle>製作簽署檔案</Subtitle>
+              <NavStep active={docName !== null && "true"}>3</NavStep>
+              <Subtitle $mode={docName !== null && "active"}>
+                製作簽署檔案
+              </Subtitle>
             </NavLink>
-            <NavBlock />
+            <NavBlock active={docName !== null && "true"} />
             <NavLink>
               <NavStep>4</NavStep>
               <Subtitle>下載簽署檔案</Subtitle>
@@ -92,27 +102,36 @@ export const SignByMyself = () => {
           </NavLinks>
           <NavHelp>
             <AiOutlineQuestionCircle color={colors.n5} size="1.5rem" />
-            <BtnStyle>取消</BtnStyle>
+            <BtnStyle onClick={() => navigate("/member")}>取消</BtnStyle>
+            <BtnStyle main onClick={() => setShowDownloadModal(true)}>
+              創建文件
+            </BtnStyle>
           </NavHelp>
         </SignNav>
         {docName !== null && <DocHeader docName={docName} docTags={docTags} />}
       </SignNavHeader>
 
       {pdf === null ? (
-        <UploadDocs setPdf={setPdf} setFileName={setFileName} />
+        <UploadDocs
+          setPdf={setPdf}
+          setFileName={setFileName}
+          onUpLoad={onUpLoad}
+        />
       ) : docName === null ? (
         <NameDocs
           setPdf={setPdf}
           fileName={fileName}
           setDocName={setDocName}
           setDocTags={setDocTags}
+          pdfByPages={pdfByPages}
         />
       ) : (
         <SignDoc
-          pdf={pdf}
+          pdfByPages={pdfByPages}
           docName={docName}
-          setDocName={setDocName}
           docTags={docTags}
+          showDownloadModal={showDownloadModal}
+          setShowDownloadModal={setShowDownloadModal}
         />
       )}
     </>
