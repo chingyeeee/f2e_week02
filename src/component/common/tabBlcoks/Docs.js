@@ -119,77 +119,82 @@ const BtnAction = styled.div`
   }
 `;
 
-export const Docs = ({ username }) => {
+export const Docs = ({ username, historyFile }) => {
   const [showMore, setShowMore] = useState(false);
 
   return (
-    <Col xs={12} md={6} lg={4} xl={3}>
-      <Doc>
-        <DocHeader>
-          <HeaderTitle>
-            <HeaderContent>
-              <MainTitle>
-                <H5 bold>產品測試文件</H5>
-                <Tags>
-                  <DocTag $tag="teach">產品教學</DocTag>
-                  <DocTag $tag="test">產品測試</DocTag>
-                </Tags>
-              </MainTitle>
-            </HeaderContent>
-            <DocIcon>
-              <Image src={PDF} alt="pdf" />
-            </DocIcon>
-            <BtnMore onClick={() => setShowMore(!showMore)}>
-              <FiMoreVertical className="icon-more" size="1.5rem" />
-              <MoreContent more={showMore ? true : false}>
-                <BtnAction>
-                  <BsInfoCircle strokeWidth="0.3" />
-                  <P2 medium>簽署狀態</P2>
-                </BtnAction>
-                <BtnAction>
-                  <BsClipboardCheck strokeWidth="0.3" />
-                  <P2 medium>稽核軌跡</P2>
-                </BtnAction>
-                <BtnAction>
-                  <BsDownload strokeWidth="0.3" />
-                  <P2 medium>下載檔案</P2>
-                </BtnAction>
-                <BtnAction>
-                  <BsPencilSquare strokeWidth="0.3" />
-                  <P2 medium>重新命名</P2>
-                </BtnAction>
-                <BtnAction>
-                  <BsTag strokeWidth="0.3" />
-                  <P2 medium>管理標籤</P2>
-                </BtnAction>
-                <BtnAction>
-                  <BsArchive strokeWidth="0.3" />
-                  <P2 medium>封存</P2>
-                </BtnAction>
-                <BtnAction>
-                  <BsTrash strokeWidth="0.3" />
-                  <P2 medium>刪除</P2>
-                </BtnAction>
-              </MoreContent>
-            </BtnMore>
-          </HeaderTitle>
-          <P2>最後修改時間：2022-10-26</P2>
-        </DocHeader>
-        <DocAuthor>
-          <Title>簽署者：</Title>
-          <UserProfile
-            width="1rem"
-            height="1rem"
-            padding="5px"
-            paddingMobile="5px"
-          >
-            <BsPersonFill />
-          </UserProfile>
-          <UserInfo>
-            <Title $mode="black">{username}</Title>
-          </UserInfo>
-        </DocAuthor>
-      </Doc>
-    </Col>
+    <>
+      {historyFile.map((doc, i) => {
+        return (
+          <Col xs={12} md={6} lg={4} xl={3} key={i}>
+            <Doc>
+              <DocHeader>
+                <HeaderTitle>
+                  <HeaderContent>
+                    <MainTitle>
+                      <H5 bold>{doc.docName}</H5>
+                      <Tags>
+                        <DocTag $tag="teach">{doc.docTags}</DocTag>
+                      </Tags>
+                    </MainTitle>
+                  </HeaderContent>
+                  <DocIcon>
+                    <Image src={PDF} alt="pdf" />
+                  </DocIcon>
+                  <BtnMore onClick={() => setShowMore(!showMore)}>
+                    <FiMoreVertical className="icon-more" size="1.5rem" />
+                    <MoreContent more={showMore ? true : false}>
+                      <BtnAction>
+                        <BsInfoCircle strokeWidth="0.3" />
+                        <P2 medium>簽署狀態</P2>
+                      </BtnAction>
+                      <BtnAction>
+                        <BsClipboardCheck strokeWidth="0.3" />
+                        <P2 medium>稽核軌跡</P2>
+                      </BtnAction>
+                      <BtnAction>
+                        <BsDownload strokeWidth="0.3" />
+                        <P2 medium>下載檔案</P2>
+                      </BtnAction>
+                      <BtnAction>
+                        <BsPencilSquare strokeWidth="0.3" />
+                        <P2 medium>重新命名</P2>
+                      </BtnAction>
+                      <BtnAction>
+                        <BsTag strokeWidth="0.3" />
+                        <P2 medium>管理標籤</P2>
+                      </BtnAction>
+                      <BtnAction>
+                        <BsArchive strokeWidth="0.3" />
+                        <P2 medium>封存</P2>
+                      </BtnAction>
+                      <BtnAction>
+                        <BsTrash strokeWidth="0.3" />
+                        <P2 medium>刪除</P2>
+                      </BtnAction>
+                    </MoreContent>
+                  </BtnMore>
+                </HeaderTitle>
+                <P2>最後修改時間：{doc.timeStamp}</P2>
+              </DocHeader>
+              <DocAuthor>
+                <Title>簽署者：</Title>
+                <UserProfile
+                  width="1rem"
+                  height="1rem"
+                  padding="5px"
+                  paddingMobile="5px"
+                >
+                  <BsPersonFill />
+                </UserProfile>
+                <UserInfo>
+                  <Title $mode="black">{username}</Title>
+                </UserInfo>
+              </DocAuthor>
+            </Doc>
+          </Col>
+        );
+      })}
+    </>
   );
 };
