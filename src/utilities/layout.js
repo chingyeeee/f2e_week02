@@ -14,7 +14,7 @@ export const BtnStyle = styled.button`
   border-radius: 4px;
   border: 1px solid ${colors.p1};
   padding: 8px 20px;
-  color: ${colors.p1};
+  color: ${(props) => (props.main ? colors.n1 : colors.p1)};
   display: flex;
   justify-content: center;
   align-items: center;
