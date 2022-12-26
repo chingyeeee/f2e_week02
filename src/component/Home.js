@@ -173,7 +173,7 @@ const ErrorMsg = styled(P2)`
 
 //Login Block
 const LoginBody = (props) => {
-  const { login, setLogin, setEmail } = props;
+  const { setLogin, email, setEmail } = props;
   const [showPassword, setShowPassword] = useState(false);
   // const [password,setPassword] = useState(null)
   const [inputValue, setInputValue] = useState(null);
@@ -188,6 +188,7 @@ const LoginBody = (props) => {
 
     if (inputValue != null && regEmail.test(inputValue)) {
       setEmail(inputValue);
+      localStorage.setItem("email", JSON.stringify(email));
       setMessage("");
       setBtnState(true);
     } else {
@@ -199,7 +200,8 @@ const LoginBody = (props) => {
 
   function loginHandler() {
     emailValidation();
-    message === "" && setLogin(true) && navigate("/");
+
+    message === "" && navigate("/member") && setLogin(true);
   }
 
   return (
@@ -287,12 +289,7 @@ export const Home = () => {
   return (
     <>
       {login ? (
-        <Member
-          login={login}
-          setLogin={setLogin}
-          email={email}
-          setEmail={setEmail}
-        />
+        <Member login={login} setLogin={setLogin} />
       ) : (
         <HomeBg>
           <Container>
