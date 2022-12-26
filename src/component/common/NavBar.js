@@ -19,6 +19,7 @@ import {
 } from "react-icons/bs";
 import { Caption, Subtitle, Title } from "../../utilities/typography";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Nav = styled.nav`
   padding: 16px 0;
@@ -178,6 +179,15 @@ const UserName = styled(Title)`
 `;
 
 const UserDetail = styled.div`
+  .btn-hover {
+    :hover {
+      background-color: ${colors.p2};
+      color: ${colors.p1};
+      h5 {
+        color: ${colors.p1};
+      }
+    }
+  }
   @media ${devicesMax.tabletH} {
     position: absolute;
     top: 390px;
@@ -197,10 +207,9 @@ const UserDetail = styled.div`
     color: ${colors.n6};
     display: ${(props) => (props.show ? "flex" : "none")};
     flex-direction: column;
-    gap: 16px;
     border-radius: 4px;
     box-shadow: 0 0 5px ${colors.shadowlv2};
-    padding: 16px;
+
     transition: 0.5s;
   }
 `;
@@ -225,10 +234,18 @@ const UserLogout = styled.div`
   align-items: center;
 `;
 
-export const NavBar = ({ email, login, setLogin }) => {
+export const NavBar = ({ login, setLogin }) => {
+  const email = JSON.parse(localStorage.getItem("email"));
   const username = email.split("@")[0];
   const [showUser, setShowUser] = useState(false);
   const [openSidebar, setOpenSidebar] = useState(false);
+  const navigate = useNavigate();
+
+  function logout() {
+    navigate("/");
+    localStorage.removeItem("email");
+    localStorage.removeItem("signHistory");
+  }
 
   return (
     <>
@@ -287,20 +304,19 @@ export const NavBar = ({ email, login, setLogin }) => {
                     />
                     <BsChevronRight color={colors.n6} className="d-lg-none" />
                     <UserDetail show={showUser ? true : false}>
-                      <Subtitle className="d-none d-lg-block">{email}</Subtitle>
-                      <UserLogout>
+                      <Subtitle className="btn-hover d-none d-lg-block p-3">
+                        {email}
+                      </Subtitle>
+                      <UserLogout
+                        className="btn-hover p-3"
+                        onClick={() => logout()}
+                      >
                         <HiOutlineLogout
                           size="1.5rem"
                           color={colors.n6}
                           className="d-lg-none"
                         />
-                        <Subtitle
-                          onClick={() => {
-                            setLogin(false);
-                          }}
-                        >
-                          登出
-                        </Subtitle>
+                        <Subtitle>登出</Subtitle>
                       </UserLogout>
                     </UserDetail>
                   </UserNav>
