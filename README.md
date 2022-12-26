@@ -1,71 +1,50 @@
-# Getting Started with Create React App
+# 2022 F2E - DottedSign
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<img src='./public/cover.jpg'>
 
-## Available Scripts
+設計稿 FROM <a href="https://uxfol.io/jennywu" target='_blank'>Jenny Wu</a> - <a href="https://www.figma.com/file/Y69aV4z6ULL30hprRcmULA/F2E-%2F-W2%3A%E4%BB%8A%E6%99%9A%EF%BC%8C%E6%88%91%E6%83%B3%E4%BE%86%E9%BB%9E%E9%BB%9E%E7%B0%BD" target="_blank">Figma</a>
 
-In the project directory, you can run:
+DEMO - <a href="https://yuwen-ctw.github.io/2022_F2E_W2_dottedsign/" target="_blank">DottedSign</a>
+<br>
+<br>
 
-### `npm start`
+## 功能
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- 首頁 -
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+  1. 利用 email 進行登入
 
-### `npm test`
+- 會員首頁
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  1. 如有已簽署檔案，可於畫面上看到歷史紀錄
+  2. 可於右上方點擊新增自己簽署
 
-### `npm run build`
+- 檔案上傳頁面
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  1.選擇要進行簽署的檔案
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- 檔案設定頁面
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+  1. 可自訂檔案名稱
+  2. 可自訂標籤名稱
 
-### `npm run eject`
+- 編輯檔案頁面
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+  1. 可切換 PDF 頁碼
+  2. 工具列 - 簽名: 建立簽名
+  3. 工具列 - 日期: 建立當天日期
+  4. 工具列 - 插入文字: 建立可編輯文字框
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+> > 完成編輯後
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+1. 可按右上方創建文件
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 開發工具
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# f2e_week02
+- creat-react-app - 框架
+- styled-component - CSS & 動態改變樣式
+- pdfjs-dist - 解析與渲染 PDF 檔
+- fabric - 與 canvas 互動
+- jspdf - 建立 PDF
+- react-router-dom - 路由處理器
+- react-icons - icon 資料庫
