@@ -10,7 +10,7 @@ DEMO - <a href="https://yuwen-ctw.github.io/2022_F2E_W2_dottedsign/" target="_bl
 
 ## 功能
 
-- 首頁 -
+- 首頁
 
   1. 利用 email 進行登入
 
@@ -35,7 +35,7 @@ DEMO - <a href="https://yuwen-ctw.github.io/2022_F2E_W2_dottedsign/" target="_bl
   3. 工具列 - 日期: 建立當天日期
   4. 工具列 - 插入文字: 建立可編輯文字框
 
-> > 完成編輯後
+> 完成編輯後
 
 1. 可按右上方創建文件
 
